@@ -15,14 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django_email_verification import urls as email_urls  # include the urls
-from decouple import config
+from django_email_verification import urls as email_urls
+from django.conf import settings
 
 urlpatterns = [
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
-    path(f'{config("ADMIN_URL")}/', admin.site.urls),
+    # Removed admin_honeypot; using custom admin URL defined in settings
+    path(f'{settings.ADMIN_URL}/', admin.site.urls),
     path('portfolio/', include('portfolio.urls')),
     path('', include('blogs.urls')),
-    path('email/', include(email_urls)), 
-    path('', include('django.contrib.auth.urls'))
+    path('email/', include(email_urls)),
+    path('', include('django.contrib.auth.urls')),
 ]

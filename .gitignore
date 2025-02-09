@@ -1,6 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
+# Virtual environment directories
+venv/
+env/
+
+# Django-specific files
+db.sqlite3
+*.log
+
+# If you use a file for environment variables, keep it out of Git (do not commit secrets)
 .env
-*.pyc
+
+# IDE / Editor settings
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore private key files
 *.pem
-*.txt
+
+# Django migrations: do not ignore the migrations folders themselves
+# (You generally want to track your migration files)
+# But ignore any __pycache__ directories inside migrations
+**/migrations/__pycache__/
+
+# Ignore temporary files (if any)
+*.swp
+*.swo
+
+# (Optional) If you have any local settings file that you do not want to commit
+# local_settings.py
+
+# (Optional) If "set.py" contains sensitive or local-specific settings, ignore it:
 set.py
