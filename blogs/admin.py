@@ -1,9 +1,9 @@
 from django.contrib import admin
 from . import models
 
-admin.site.site_header = 'Fortyseven Admin'
-admin.site.site_title = 'Fortyseven Admin Panel'
-admin.site.index_title = 'Welcome to Fortyseven Admin Panel'
+admin.site.site_header = 'AlienCode Admin'
+admin.site.site_title = 'AlienCode Admin Panel'
+admin.site.index_title = 'Welcome to AlienCode Admin Panel'
 
 # Register your models here.
 admin.site.register((models.Blog, models.BlogComment))
