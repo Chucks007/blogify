@@ -1,11 +1,14 @@
-from django import views
-from django.contrib import admin
+# In your project's urls.py or blogs/urls.py (if included)
 from django.urls import path, include
-from django.conf.urls.static import static
+from django.contrib import admin
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 from django.contrib.auth import views as auth_views
+
+# Import the proxy view from blogs/proxy.py
+from blogs.proxy import proxy_zenquotes
 
 app_name = 'blogs'
 
@@ -13,7 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage, name='homepage'),
     path('cookieAcceptance/', views.cookie_acceptance, name='cookie-acceptance'),
-    path('froala_editor/',include('froala_editor.urls')),
+    path('froala_editor/', include('froala_editor.urls')),
     path('login/', views.login, name='login'),
     path('myProfile/', views.my_profile, name='my-profile'),
     path('deleteProPic/', views.delete_profile_pic, name='delete-profile-pic'),
@@ -39,21 +42,34 @@ urlpatterns = [
     path('subscribe/', views.subscribe, name='subscribe'),
 
     path('reset_password/',
-     auth_views.PasswordResetView.as_view(template_name="pwd_reset/password_reset.html", html_email_template_name="pwd_reset/reset_email.html", from_email=settings.EMAIL_FROM_RESET, subject_template_name="pwd_reset/email_subject.txt"),
-     name="reset_password"),
+         auth_views.PasswordResetView.as_view(
+             template_name="pwd_reset/password_reset.html",
+             html_email_template_name="pwd_reset/reset_email.html",
+             from_email=settings.EMAIL_FROM_RESET,
+             subject_template_name="pwd_reset/email_subject.txt"
+         ),
+         name="reset_password"),
 
     path('reset/<uidb64>/<token>/',
-     auth_views.PasswordResetConfirmView.as_view(template_name="pwd_reset/password_reset_form.html"), 
-     name="password_reset_confirm"),
+         auth_views.PasswordResetConfirmView.as_view(
+             template_name="pwd_reset/password_reset_form.html"
+         ),
+         name="password_reset_confirm"),
 
+    path('password_reset/done/',
+         auth_views.PasswordResetDoneView.as_view(
+             template_name="pwd_reset/password_reset_sent.html"
+         ),
+         name="password_reset_done"),
 
-    path('password_reset/done/', 
-        auth_views.PasswordResetDoneView.as_view(template_name="pwd_reset/password_reset_sent.html"), 
-        name="password_reset_done"),
+    path('reset/done/',
+         auth_views.PasswordResetCompleteView.as_view(
+             template_name="pwd_reset/password_reset_done.html"
+         ),
+         name="password_reset_complete"),
 
-    path('reset/done/', 
-        auth_views.PasswordResetCompleteView.as_view(template_name="pwd_reset/password_reset_done.html"), 
-        name="password_reset_complete"),
+    # Add the proxy endpoint:
+    path('proxy/zenquotes/', proxy_zenquotes, name='proxy_zenquotes'),
 ]
 
 if settings.DEBUG:

@@ -1,13 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<title>{% block title %} Login {% endblock %}</title>
+{% block title %}Login{% endblock %}
 
 {% block start %}
-<script src='https://www.google.com/recaptcha/api.js?render={{recaptcha_site_key}}'></script>
-
 <div class="container login-container">
-
     <div class="row" style="height: 15vh;"></div>
     <div class="row login-row">
         <div class="col-lg-4"></div>
@@ -20,7 +17,7 @@
         <div class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4">
-                <input id="username" name="username" type="text" placeholder="Username">
+                <input id="username" name="username" type="text" placeholder="Username" required>
             </div>
             <div class="col-lg-4"></div>
         </div>
@@ -28,8 +25,10 @@
         <div class="row">
             <div class="col-lg-4"></div>
             <div class="col-lg-4 password">
-                <input id="password" name="password" type="password" placeholder="Password">
-                <span id="eyeIcon" onclick="togglePassword()"><i class="bi bi-eye-slash toggle"></i></span>
+                <input id="password" name="password" type="password" placeholder="Password" required>
+                <span id="eyeIcon" onclick="togglePassword()">
+                    <i class="bi bi-eye-slash toggle"></i>
+                </span>
             </div>
             <div class="col-lg-4"></div>
         </div>
@@ -38,51 +37,47 @@
             <div class="col-lg-4"></div>
             <div class="col-lg-4 btn-base btn-login">
                 <button class="loginBtn" type="submit">LOGIN <i class="bi bi-box-arrow-in-right"></i></button>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
     </form>
-</div>
-<div class="col-lg-4"></div>
-</div>
-
-<div class="row" style="height: 25vh;">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4  col-md-12 col-12">
-        <div class="bottom-login">
-            <ul>
-                <li><a href="{% url 'blogs:reset_password' %}">Forgot Password?</a></li>
-                <li><a href="{% url 'blogs:signup' %}">New User? Sign-Up Here!</a></li>
-            </ul>
+    
+    <div class="row" style="height: 25vh;">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 col-md-12 col-12">
+            <div class="bottom-login">
+                <ul>
+                    <li><a href="{% url 'blogs:reset_password' %}">Forgot Password?</a></li>
+                    <li><a href="{% url 'blogs:signup' %}">New User? Sign-Up Here!</a></li>
+                </ul>
+            </div>
         </div>
+        <div class="col-lg-4"></div>
     </div>
-    <div class="col-lg-4"></div>
-
-</div>
-<div class="row">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
-        <div class="recaptcha reLogin">
-            <p>This site is protected by reCAPTCHA and the <br> Google <a
-                    href="https://policies.google.com/privacy">Privacy Policy</a> and <a
-                    href="https://policies.google.com/terms">Terms of Service</a> apply.
-            </p>
-            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-        </div>
-    </div>
-    <div class="col-lg-4">
-    </div>
-</div>
 </div>
 
 <script>
-    grecaptcha.ready(function () {
-        document.getElementById('loginForm').addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            grecaptcha.execute('{{recaptcha_site_key}}', { action: '/login/' }).then(function (token) {
-                document.getElementById("g-recaptcha-response").value = token;
-                logIn();
-            });
-        }, false);
+    // If you have a logIn() function defined elsewhere to handle form submission,
+    // this script will simply prevent the default submission and call logIn().
+    document.getElementById('loginForm').addEventListener("submit", function(event) {
+        event.preventDefault();
+        // Call your login handler function here. For example:
+        logIn();
     });
-</script>
 
+    // Example togglePassword function
+    function togglePassword() {
+        var passwordField = document.getElementById('password');
+        var eyeIcon = document.getElementById('eyeIcon').querySelector('i');
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("bi-eye-slash");
+            eyeIcon.classList.add("bi-eye");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("bi-eye");
+            eyeIcon.classList.add("bi-eye-slash");
+        }
+    }
+</script>
 {% endblock %}

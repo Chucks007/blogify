@@ -122,8 +122,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
 # CAPTCHA Configuration
-GOOGLE_RECAPTCHA_SITE_KEY = env('GOOGLE_RECAPTCHA_SITE_KEY', default='dummy-site-key')
-GOOGLE_RECAPTCHA_SECRET_KEY = env('GOOGLE_RECAPTCHA_SECRET_KEY', default='dummy-secret-key')
+#GOOGLE_RECAPTCHA_SITE_KEY = env('GOOGLE_RECAPTCHA_SITE_KEY', default='dummy-site-key')
+#GOOGLE_RECAPTCHA_SECRET_KEY = env('GOOGLE_RECAPTCHA_SECRET_KEY', default='dummy-secret-key')
 
 # Security Settings
 SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', default=False)
