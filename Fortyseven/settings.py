@@ -22,7 +22,7 @@ env = environ.Env(DEBUG=(bool, False))
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # In settings.py, after initializing 'env'
-ADMIN_URL = env('ADMIN_URL', default='secret-admin')
+ADMIN_URL = env('ADMIN_URL')
 
 
 # SECURITY
@@ -119,7 +119,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # CAPTCHA Configuration
 #GOOGLE_RECAPTCHA_SITE_KEY = env('GOOGLE_RECAPTCHA_SITE_KEY', default='dummy-site-key')
