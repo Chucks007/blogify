@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django_email_verification import urls as email_urls
 from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Removed admin_honeypot; using custom admin URL defined in settings
@@ -26,3 +27,8 @@ urlpatterns = [
     path('email/', include(email_urls)),
     path('', include('django.contrib.auth.urls')),
 ]
+
+
+# Serve media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

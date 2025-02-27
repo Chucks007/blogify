@@ -28,6 +28,8 @@ ADMIN_URL = env('ADMIN_URL')
 # SECURITY
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
+if DEBUG:
+    print("⚠️ WARNING: Running in DEBUG mode! Disable in production.")
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'])
 
 # CSRF Trusted Origins
@@ -152,7 +154,7 @@ EMAIL_MULTI_USER = env.bool('EMAIL_MULTI_USER', default=True)
 EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_PORT = env.int('EMAIL_PORT', default=587)
 EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='your-email@gmail.com')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='your-email-password')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
 
 # AWS Configuration (For Production)
@@ -167,7 +169,8 @@ if not DEBUG:
     AWS_S3_ENDPOINT_URL = env('AWS_S3_ENDPOINT_URL')
     AWS_S3_SIGNATURE_VERSION = env('AWS_S3_SIGNATURE_VERSION')
     AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=525960'}
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=31536000'}  # 1 year
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
